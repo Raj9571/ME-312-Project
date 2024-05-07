@@ -92,5 +92,5 @@ num_frames = max(len(info['path']) for info in ambulance_info.values())
 # Create the animation
 ani = animation.FuncAnimation(fig, update, frames=num_frames, interval=500, blit=True)
 
-ani.save('ambulance_animation.gif', writer='imagemagick', fps=2)
+
 plt.show()
