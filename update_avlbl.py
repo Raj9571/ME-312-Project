@@ -13,7 +13,6 @@ class AmbulanceDispatch:
         self.current_time = 0  # Track the current time for dispatches
         self.was_queue_processed = False  # Track whether the queue was processed
         self.hospital_to_station = read_ambulance_station_assignments('hospital_to_station_mapping.txt')
-        self.ambulance_positions_log = {id: [] for id in ambulance_data}  # Position log for each ambulance
 
     def find_nearby_ambulances(self, patient_node, radius=float('inf')):
         nearby_ambulances = {}
@@ -95,7 +94,6 @@ class AmbulanceDispatch:
                     new_current_node=path[current_node_in_path+1]
                     info['current_node']=new_current_node
                     info['current_time_t0']=self.current_time
-                    self.ambulance_positions_log[ambulance_id].append((self.current_time, next_node))
                     print(self.current_time,':Location of assigned ambulance ', ambulance_id ,'updated to ' ,new_current_node)
             if info['availability_time'] <= self.current_time:
                 newly_available.append(ambulance_id)
@@ -122,7 +120,6 @@ class AmbulanceDispatch:
                         new_current_node=path[current_node_in_path+1]
                         self.available_ambulances[ambulance_id]=(info[0],info[1],new_current_node,info[3],self.current_time)
                         print(self.current_time,':Location of available ambulance ', ambulance_id ,'updated to ' ,new_current_node)
-            self.ambulance_positions_log[id].append((self.current_time, positions[2]))
 
 
         if newly_available:
@@ -246,45 +243,8 @@ if __name__ == "__main__":
     graph = recreate_graph_from_file('graph_structure.txt')
     assignment_file_path = 'hospital_assignments.txt'
     assignments = read_hospital_assignments(assignment_file_path)
-    ambulance_data = {
-    1: ('A210', None, 'A210', None, None),
-    2: ('A211', None, 'A211', None, None),
-    3: ('A212', None, 'A212', None, None),
-    4: ('A213', None, 'A213', None, None),
-    5: ('A214', None, 'A214', None, None),
-    }
+    ambulance_data = {1: ('A210', None, 'A210', None,None), 2: ('A211', None, 'A211', None,None)} 
     #ambulance id, hospital the ambulance went to, current loaction between ambulance and station, path from hospital to station
     dispatcher = AmbulanceDispatch(graph, ambulance_data)
-    patient_calls = {
-    1: ('E28', 1, 5),       # Close to A210
-    2: ('E8', 1, 30),       # Close to A211
-    3: ('E31', 1, 60),      # Close to A212
-    4: ('E37', 1, 100),     # Close to A213
-    5: ('E4', 1, 150),      # Close to A214
-    6: ('E7', 1, 210),      # Close to A215
-    7: ('E6', 2, 280),      # Close to A216
-    8: ('E107', 2, 360),    # Close to A210
-    9: ('E108', 3, 450),    # Close to A211
-    10: ('E10', 4, 550),    # Close to A212
-    11: ('E115', 5, 660),   # Close to A213
-    12: ('E119', 6, 780),   # Close to A214
-    13: ('E123', 7, 910),   # Close to A215
-    14: ('E126', 8, 1050),  # Close to A216
-    15: ('E129', 9, 1200),  # Close to A210
-    16: ('E132', 10, 1360), # Close to A211
-    17: ('E135', 1, 1530),  # Close to A212
-    18: ('E138', 2, 1710),  # Close to A213
-    19: ('E142', 3, 1900),  # Close to A214
-    20: ('E145', 4, 2100),  # Close to A215
-    21: ('E147', 1, 2310),  # Close to A216
-    22: ('E149', 2, 2530),  # Close to A210
-    23: ('E151', 3, 2760),  # Close to A211
-    24: ('E153', 4, 3000),  # Close to A212
-    25: ('E155', 5, 3250),  # Close to A213
-    26: ('E157', 6, 3510),  # Close to A214
-    27: ('E159', 7, 3780),  # Close to A215
-    28: ('E161', 8, 4060),  # Close to A216
-    29: ('E163', 9, 4350),  # Close to A210
-    30: ('E165', 10, 4650)  # Close to A211
-    }
+    patient_calls = {1:('E150', 1, 5), 2:('E153', 1, 10), 3:('E43', 1, 15), 4:('E120', 1, 20), 5:('E140', 1, 25), 6:('E92', 1, 30)}
     dispatcher.run_simulation(patient_calls)
