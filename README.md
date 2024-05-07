@@ -5,7 +5,7 @@
    respectively.
 2. city.py generates an arbitrary city consisting of potential Emergency call locations and Hospitals, ensuring that the graph generated is connected and city-like. It uses optimal location.py to output a txt file 'graph_structure.txt' with graph data for all potential emergencies, hospitals, and ambulance stations (found using K means).
 3. create_graph.py is used in other code files to generate a graph structure using a txt file. The text file should have the first line as no. of nodes (n), the next n lines should have node location, and the remaining lines are weights of edges between nodes.
-4. animation.py is used to show an animation of two ambulances moving simultaneously to two emergency calls, delivering them to the nearest hospitals, and then moving to the next emergency calls.
+4. animation.py animates two ambulances moving simultaneously to two emergency calls, delivering them to the nearest hospitals, and then moving to the next emergency calls.
 5. clusters.png is the image of clusters, and their centroids found using optimal_location.py
 6. create_graph_2.py uses 'ujjain_map_data.txt' as input that generates its graph structure and outputs a file 'new_Ujjain.txt' file that removes missing info nodes and changes their node numbers.
 7. generate_hospital_assignments.py is used to output a txt file 'hospital_assignments.txt' with info about which patient should be assigned to which hospital using the Dijkstra algorithm.
